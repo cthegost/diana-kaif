@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Для Дианы 💖</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --gold:#FFD700;--pink:#FF69B4;--dpink:#FF1493;
+      --bg:#05000f;
+    }
+    html,body{
+      width:100%;height:100%;overflow:hidden;
+      background:var(--bg);
+      font-family:'Georgia','Times New Roman',serif;
+      touch-action:none;
+      -webkit-user-select:none;user-select:none;
+      -webkit-tap-highlight-color:transparent;
+    }
+    #sc{position:fixed;inset:0;z-index:1;pointer-events:none;transform:translateZ(0);will-change:transform;}
+    #fc{position:fixed;inset:0;z-index:50;pointer-events:none;transform:translateZ(0);will-change:transform;}
+
+    /* ── SLIDES ── */
+    .sw{position:fixed;inset:0;z-index:10;}
+    .slide{
+      position:absolute;inset:0;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      padding:24px 20px;
+      opacity:0;pointer-events:none;
+      transition:opacity .9s ease,transform .9s ease;
+      transform:translateY(30px);
+    }
+    .slide.active{opacity:1;pointer-events:all;transform:translateY(0);}
+    .slide.exit{opacity:0;transform:translateY(-30px);}
+
+    /* ── SLIDE 0 — HEBREW ── */
+    .heb{
+      font-size:clamp(2.6rem,13vw,5.2rem);
+      color:var(--gold);direction:rtl;
+      text-shadow:0 0 20px var(--gold),0 0 60px var(--pink);
+      animation:gGlow 3s ease-in-out infinite alternate;
+      line-height:1.3;margin-bottom:12px;
+      will-change:transform,opacity;
+    }
+    @keyframes gGlow{
+      from{text-shadow:0 0 15px var(--gold),0 0 35px var(--pink),0 0 60px rgba(255,215,0,.3);}
+      to  {text-shadow:0 0 30px var(--gold),0 0 75px var(--pink),0 0 120px rgba(255,215,0,.5),0 0 180px rgba(255,105,180,.25);}
+    }
+    .heb-sub{color:rgba(255,255,255,.5);font-size:.95rem;letter-spacing:5px;text-transform:uppercase;margin-bottom:6px;}
+    .heb-note{color:rgba(255,255,255,.25);font-size:.78rem;letter-spacing:2px;margin-bottom:44px;}
+
+    /* ── BUTTONS ── */
+    .btn{
+      display:inline-block;padding:15px 38px;
+      border-radius:50px;border:none;
+      font-family:inherit;font-size:1rem;letter-spacing:2px;
+      cursor:pointer;outline:none;position:relative;
+      overflow:hidden;transition:transform .15s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .btn:active{transform:scale(.93);}
+    .btn-glow{
+      background:linear-gradient(135deg,#FF1493,#FF69B4,#FFD700);
+      color:#fff;
+      animation:bGlow 2.2s ease-in-out infinite;
+      will-change:transform,opacity;
+    }
+    @keyframes bGlow{
+      0%,100%{box-shadow:0 0 14px rgba(255,20,147,.65),0 0 30px rgba(255,20,147,.35);}
+      50%    {box-shadow:0 0 28px rgba(255,20,147,1),0 0 60px rgba(255,20,147,.65),0 0 100px rgba(255,215,0,.35);}
+    }
+    .btn-glow::after{
+      content:'';position:absolute;
+      top:-50%;left:-75%;width:50%;height:200%;
+      background:rgba(255,255,255,.22);transform:skewX(-20deg);
+      animation:bShine 3.2s ease-in-out infinite;
+    }
+    @keyframes bShine{0%{left:-75%;}60%,100%{left:155%;}}
+
+    /* ── SLIDE COMMON ── */
+    .sname{
+      font-size:clamp(2.4rem,10vw,4rem);
+      background:linear-gradient(135deg,var(--gold),var(--pink),var(--dpink));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;text-align:center;font-weight:bold;
+      margin-bottom:14px;
+    }
+    .ssub{
+      color:rgba(255,255,255,.75);text-align:center;
+      font-size:1.05rem;line-height:2;margin-bottom:22px;
+    }
+
+    /* ── PROGRESS ── */
+    .prog-wrap{width:min(85%,320px);margin-bottom:18px;}
+    .prog-lbl{color:rgba(255,255,255,.38);font-size:.72rem;letter-spacing:2.5px;text-align:center;margin-bottom:7px;}
+    .prog-bar{height:3px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;}
+    .prog-fill{
+      height:100%;
+      background:linear-gradient(90deg,var(--dpink),var(--gold));
+      border-radius:99px;box-shadow:0 0 8px var(--dpink);
+      transition:width .8s ease;
+    }
+
+    /* ── QUEST COMMON ── */
+    .qhint{
+      color:rgba(255,255,255,.42);font-size:.83rem;
+      letter-spacing:1px;margin-bottom:18px;
+      animation:hp 2s ease-in-out infinite;
+    }
+    @keyframes hp{0%,100%{opacity:.42;}50%{opacity:.9;}}
+    .rv{
+      font-size:clamp(1.2rem,5.5vw,1.9rem);
+      color:var(--gold);text-align:center;
+      text-shadow:0 0 18px var(--gold),0 0 40px var(--pink);
+      opacity:0;transform:scale(.65);
+      transition:opacity .7s ease,transform .7s cubic-bezier(.34,1.56,.64,1);
+      margin:14px 0;
+    }
+    .rv.show{opacity:1;transform:scale(1);}
+
+    /* ── QUEST 1 — grid ── */
+    #q1g{
+      display:grid;grid-template-columns:repeat(5,1fr);
+      gap:8px;width:min(270px,82vw);margin:0 auto 18px;
+    }
+    .qs{
+      width:42px;height:42px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.45rem;border-radius:50%;
+      cursor:pointer;transition:transform .15s;
+    }
+    .qs.reg{
+      color:rgba(255,255,255,.45);
+      animation:st var(--t,3s) ease-in-out infinite var(--d,0s);
+    }
+    @keyframes st{0%,100%{opacity:.45;}50%{opacity:.95;}}
+    .qs.spc{
+      color:var(--pink);font-size:1.75rem;
+      animation:sp 1.5s ease-in-out infinite;
+      filter:drop-shadow(0 0 8px var(--pink));
+      will-change:transform,opacity;
+    }
+    @keyframes sp{
+      0%,100%{transform:scale(1);filter:drop-shadow(0 0 8px var(--pink));}
+      50%{transform:scale(1.28);filter:drop-shadow(0 0 20px var(--pink)) drop-shadow(0 0 10px var(--gold));}
+    }
+    .qs.wrong{animation:wt .4s ease;}
+    @keyframes wt{0%,100%{transform:scale(1);}30%{transform:scale(1.2) rotate(12deg);}70%{transform:scale(.8) rotate(-12deg);}}
+
+    /* ── QUEST 2 — arena ── */
+    #q2a{
+      position:relative;
+      width:min(290px,88vw);height:min(290px,88vw);
+      margin:0 auto 18px;border-radius:50%;
+      background:radial-gradient(circle,rgba(255,255,255,.025) 0%,transparent 70%);
+      border:1px solid rgba(255,255,255,.07);overflow:hidden;
+    }
+    .fstar{
+      position:absolute;font-size:2.1rem;cursor:pointer;
+      filter:drop-shadow(0 0 12px var(--gold));
+      transition:left .8s cubic-bezier(.25,.8,.25,1),top .8s cubic-bezier(.25,.8,.25,1),opacity .35s;
+    }
+
+    /* ── QUEST 3 — constellation ── */
+    #q3c{
+      position:relative;
+      width:min(280px,88vw);height:200px;
+      margin:0 auto 18px;
+    }
+    #q3svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+    .cstar{
+      position:absolute;
+      width:50px;height:50px;border-radius:50%;
+      border:2px solid rgba(255,215,0,.4);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.25rem;cursor:pointer;
+      transition:all .35s;
+      animation:ci 2.6s ease-in-out infinite;
+      transform:translate(-50%,-50%);
+      will-change:transform,opacity;
+    }
+    @keyframes ci{0%,100%{border-color:rgba(255,215,0,.4);}50%{border-color:rgba(255,215,0,.9);box-shadow:0 0 12px rgba(255,215,0,.35);}}
+    .cstar.lit{
+      background:rgba(255,215,0,.2);
+      border-color:var(--gold);
+      animation:cl 1s ease-in-out infinite alternate;
+    }
+    @keyframes cl{
+      from{box-shadow:0 0 14px var(--gold),0 0 28px rgba(255,215,0,.3);}
+      to  {box-shadow:0 0 28px var(--gold),0 0 55px rgba(255,215,0,.5),0 0 6px var(--pink);}
+    }
+
+    /* ── FINAL SLIDE ── */
+    .fcard{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,215,0,.22);
+      border-radius:26px;padding:28px 22px;
+      width:min(340px,91vw);text-align:center;
+      backdrop-filter:blur(12px);
+      box-shadow:0 0 50px rgba(255,20,147,.12),inset 0 0 40px rgba(255,215,0,.04);
+    }
+    .fline{color:rgba(255,255,255,.88);font-size:1.08rem;line-height:2.1;}
+    .hl-g{color:var(--gold);text-shadow:0 0 10px var(--gold);}
+    .hl-p{color:var(--pink);text-shadow:0 0 10px var(--pink);}
+    .hrow{display:flex;justify-content:center;gap:12px;margin:14px 0;}
+    .hf{font-size:1.8rem;animation:hfl 2.5s ease-in-out infinite;}
+    .hf:nth-child(2){animation-delay:.4s;}
+    .hf:nth-child(3){animation-delay:.8s;}
+    @keyframes hfl{0%,100%{transform:translateY(0);}50%{transform:translateY(-13px);}}
+
+    /* ── SHAKE RING ── */
+    .shake-ring{
+      position:fixed;inset:0;z-index:45;pointer-events:none;
+      border:3px solid rgba(255,105,180,0);
+      border-radius:0;
+      animation:none;
+    }
+    .shake-ring.pop{animation:srPop .5s ease forwards;}
+    @keyframes srPop{
+      0%{border-color:rgba(255,105,180,0);border-radius:0;}
+      40%{border-color:rgba(255,105,180,.8);border-radius:30px;}
+      100%{border-color:rgba(255,105,180,0);border-radius:60px;}
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="sc"></canvas>
+<canvas id="fc"></canvas>
+<div class="shake-ring" id="shakeRing"></div>
+
+<div class="sw">
+
+  <!-- ══ SLIDE 0 — HEBREW ══ -->
+  <div class="slide active" id="s0">
+    <div style="text-align:center;">
+      <div class="heb">אֲנִי אוֹהֵב אוֹתָךְ</div>
+      <div class="heb-sub">Я люблю тебя</div>
+      <div class="heb-note">— для самой особенной —</div>
+      <button class="btn btn-glow" id="openBtn" onclick="startCard()">
+        ✨&nbsp;&nbsp;Открыть послание&nbsp;&nbsp;✨
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 1 — INTRO ══ -->
+  <div class="slide" id="s1">
+    <div class="sname">Диана</div>
+    <div class="ssub">У меня есть для тебя<br>три особых секрета…</div>
+    <div style="color:rgba(255,215,0,.6);font-size:1.5rem;margin-bottom:28px;letter-spacing:10px;">★ ★ ★</div>
+    <div style="color:rgba(255,255,255,.38);font-size:.82rem;margin-bottom:22px;letter-spacing:1px;">Готова начать квест?</div>
+    <button class="btn btn-glow" onclick="goTo(2)">💫&nbsp;&nbsp;Начать квест</button>
+  </div>
+
+  <!-- ══ SLIDE 2 — QUEST 1 ══ -->
+  <div class="slide" id="s2">
+    <div class="prog-wrap">
+      <div class="prog-lbl">СЕКРЕТ 1 ИЗ 3</div>
+      <div class="prog-bar"><div class="prog-fill" style="width:33%"></div></div>
+    </div>
+    <div class="qhint" id="q1h">Найди особую розовую звезду ✦</div>
+    <div id="q1g"></div>
+    <div class="rv" id="rv1">✨ Ты самая ответственная ✨</div>
+    <button class="btn btn-glow" id="n1" style="display:none;margin-top:14px" onclick="goTo(3)">Дальше →</button>
+  </div>
+
+  <!-- ══ SLIDE 3 — QUEST 2 ══ -->
+  <div class="slide" id="s3">
+    <div class="prog-wrap">
+      <div class="prog-lbl">СЕКРЕТ 2 ИЗ 3</div>
+      <div class="prog-bar"><div class="prog-fill" style="width:66%"></div></div>
+    </div>
+    <div class="qhint" id="q2h">Поймай падающую звезду! ⭐</div>
+    <div id="q2a"></div>
+    <div class="rv" id="rv2">💪 Ты самая сильная 💪</div>
+    <button class="btn btn-glow" id="n2" style="display:none;margin-top:14px" onclick="goTo(4)">Дальше →</button>
+  </div>
+
+  <!-- ══ SLIDE 4 — QUEST 3 ══ -->
+  <div class="slide" id="s4">
+    <div class="prog-wrap">
+      <div class="prog-lbl">СЕКРЕТ 3 ИЗ 3</div>
+      <div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div>
+    </div>
+    <div class="qhint">Зажги все звёзды созвездия 🌟</div>
+    <div id="q3c">
+      <svg id="q3svg" viewBox="0 0 280 200" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+    <div class="rv" id="rv3">👑 Ты самая красивая 👑</div>
+    <button class="btn btn-glow" id="n3" style="display:none;margin-top:14px" onclick="goTo(5)">Финал ✨</button>
+  </div>
+
+  <!-- ══ SLIDE 5 — FINAL ══ -->
+  <div class="slide" id="s5">
+    <div class="hrow">
+      <span class="hf">💖</span><span class="hf">💗</span><span class="hf">💖</span>
+    </div>
+    <div class="fcard">
+      <div class="sname" style="margin-bottom:18px;">Диана</div>
+      <div class="fline">
+        Ты самая <span class="hl-g">ответственная</span>,<br>
+        самая <span class="hl-p">сильная</span><br>
+        и самая <span class="hl-g">красивая</span>!
+      </div>
+      <div style="margin:18px 0;color:rgba(255,255,255,.3);font-size:1.3rem;letter-spacing:7px;">· · ·</div>
+      <div style="color:rgba(255,255,255,.62);font-size:.93rem;line-height:2;">
+        Ты — моя вселенная,<br>мой самый яркий свет ✨
+      </div>
+    </div>
+    <div class="hrow" style="margin-top:18px;">
+      <span class="hf" style="font-size:2.6rem;animation-delay:.2s;">❤️</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  CANVAS + BACKGROUND
+// ══════════════════════════════════════════
+const sc  = document.getElementById('sc');
+const sCtx= sc.getContext('2d');
+const fc  = document.getElementById('fc');
+const fCtx= fc.getContext('2d');
+
+let W=0, H=0;
+function resize(){
+  W=sc.width=fc.width=window.innerWidth;
+  H=sc.height=fc.height=window.innerHeight;
+}
+resize();
+window.addEventListener('resize',resize);
+
+// ── Stars ──
+const NSTARS=120;
+const stars=[];
+function mkStars(){
+  stars.length=0;
+  for(let i=0;i<NSTARS;i++){
+    stars.push({
+      x:Math.random()*W, y:Math.random()*H,
+      r:Math.random()*1.7+.3,
+      a:Math.random()*.7+.3,
+      sp:Math.random()*.6+.1,
+      ph:Math.random()*Math.PI*2,
+      lyr:Math.floor(Math.random()*3)+1
+    });
+  }
+}
+mkStars();
+
+// ── Shooting stars ──
+const sBg=[];
+function spawnSS(){
+  if(sBg.length>=3) return;
+  sBg.push({
+    x:Math.random()*W, y:Math.random()*H*.5,
+    vx:(Math.random()*5+3)*(Math.random()<.5?1:-1),
+    vy:Math.random()*3+2,
+    life:1
+  });
+}
+setInterval(spawnSS,3800);
+
+// ── Gyroscope / tilt ──
+let tx=0,ty=0, txT=0,tyT=0;
+window.addEventListener('deviceorientation',e=>{
+  if(e.gamma!=null){
+    txT=Math.max(-30,Math.min(30,e.gamma))/30;
+    tyT=Math.max(-30,Math.min(30,(e.beta||0)-45))/30;
+  }
+},{passive:true});
+
+// ── Shake ──
+let lastAcc={x:0,y:0,z:0}, shakeCool=0;
+window.addEventListener('devicemotion',e=>{
+  const a=e.accelerationIncludingGravity;
+  if(!a) return;
+  const d=Math.abs(a.x-lastAcc.x)+Math.abs(a.y-lastAcc.y)+Math.abs(a.z-lastAcc.z);
+  lastAcc={x:a.x||0,y:a.y||0,z:a.z||0};
+  if(d>22 && Date.now()>shakeCool){
+    shakeCool=Date.now()+1000;
+    onShake();
+  }
+},{passive:true});
+
+function onShake(){
+  const ring=document.getElementById('shakeRing');
+  ring.classList.remove('pop');
+  void ring.offsetWidth;
+  ring.classList.add('pop');
+  for(let i=0;i<6;i++){
+    setTimeout(()=>{
+      burst(Math.random()*W,Math.random()*H,'#FF69B4',12);
+    },i*80);
+  }
+}
+
+// ── FX particles ──
+const fxP=[];
+function burst(x,y,col='#FFD700',n=12){
+  for(let i=0;i<n;i++){
+    if(fxP.length>=150) break;
+    const ang=(Math.PI*2/n)*i + (Math.random()-.5);
+    const spd=Math.random()*5+2;
+    fxP.push({x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,
+      r:Math.random()*4+2,life:1,col,
+      rot:Math.random()*Math.PI*2,rotV:(Math.random()-.5)*.18,
+      isRect:Math.random()>.5});
+  }
+}
+function confetti(){
+  const cols=['#FFD700','#FF69B4','#FF1493','#BF5FFF','#00CED1','#FF4500','#fff'];
+  for(let i=0;i<50;i++){
+    if(fxP.length>=150) break;
+    fxP.push({x:Math.random()*W,y:-12,
+      vx:(Math.random()-.5)*5,vy:Math.random()*4+2.5,
+      r:Math.random()*5+3,life:1,
+      col:cols[Math.floor(Math.random()*cols.length)],
+      rot:Math.random()*Math.PI*2,rotV:(Math.random()-.5)*.18,
+      isRect:Math.random()>.4});
+  }
+}
+
+// ── Render loop ──
+let T=0;
+let _lastFrameTs=0;
+const FRAME_INTERVAL=33; // ~30fps
+sCtx.imageSmoothingEnabled=false;
+fCtx.imageSmoothingEnabled=false;
+function frame(ts){
+  requestAnimationFrame(frame);
+  if(ts-_lastFrameTs<FRAME_INTERVAL) return;
+  _lastFrameTs=ts;
+  T+=.033;
+  tx+=(txT-tx)*.05; ty+=(tyT-ty)*.05;
+
+  // background gradient
+  sCtx.clearRect(0,0,W,H);
+  const gr=sCtx.createRadialGradient(W/2,H*.38,0,W/2,H*.38,H*.9);
+  gr.addColorStop(0,'rgba(28,0,58,.97)');
+  gr.addColorStop(1,'rgba(5,0,15,1)');
+  sCtx.fillStyle=gr;
+  sCtx.fillRect(0,0,W,H);
+
+  // nebula blobs
+  [[W*.3,H*.25,120,'rgba(120,0,180,.07)'],[W*.72,H*.6,90,'rgba(200,0,100,.05)']].forEach(([nx,ny,nr,nc])=>{
+    const ng=sCtx.createRadialGradient(nx,ny,0,nx,ny,nr);
+    ng.addColorStop(0,nc); ng.addColorStop(1,'transparent');
+    sCtx.fillStyle=ng; sCtx.beginPath();
+    sCtx.arc(nx,ny,nr,0,Math.PI*2); sCtx.fill();
+  });
+
+  // stars with parallax
+  for(const s of stars){
+    const px=((s.x+tx*s.lyr*14)%W+W)%W;
+    const py=((s.y+ty*s.lyr*14)%H+H)%H;
+    const tw=.4+.6*(.5+.5*Math.sin(T*s.sp*3+s.ph));
+    sCtx.beginPath();
+    sCtx.arc(px,py,s.r,0,Math.PI*2);
+    sCtx.fillStyle=`rgba(255,255,255,${s.a*tw})`;
+    sCtx.fill();
+  }
+
+  // shooting stars
+  for(let i=sBg.length-1;i>=0;i--){
+    const ss=sBg[i];
+    ss.life-=.013; ss.x+=ss.vx; ss.y+=ss.vy;
+    if(ss.life<=0){sBg.splice(i,1);continue;}
+    const sg=sCtx.createLinearGradient(ss.x,ss.y,ss.x-ss.vx*7,ss.y-ss.vy*7);
+    sg.addColorStop(0,`rgba(255,255,255,${ss.life})`);
+    sg.addColorStop(1,'rgba(255,255,255,0)');
+    sCtx.save();sCtx.strokeStyle=sg;sCtx.lineWidth=2;
+    sCtx.beginPath();sCtx.moveTo(ss.x,ss.y);
+    sCtx.lineTo(ss.x-ss.vx*8,ss.y-ss.vy*8);
+    sCtx.stroke();sCtx.restore();
+  }
+
+  // fx particles
+  fCtx.clearRect(0,0,W,H);
+  for(let i=fxP.length-1;i>=0;i--){
+    const p=fxP[i];
+    p.x+=p.vx; p.y+=p.vy; p.vy+=.12;
+    p.life-=.017; if(p.life<=0){fxP.splice(i,1);continue;}
+    fCtx.save(); fCtx.globalAlpha=p.life;
+    if(p.isRect){
+      fCtx.translate(p.x,p.y); fCtx.rotate(p.rot+=p.rotV);
+      fCtx.fillStyle=p.col;
+      fCtx.fillRect(-p.r,-p.r/2,p.r*2,p.r);
+    } else {
+      fCtx.beginPath(); fCtx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      fCtx.fillStyle=p.col; fCtx.fill();
+    }
+    fCtx.restore();
+  }
+}
+requestAnimationFrame(frame);
+
+// ══════════════════════════════════════════
+//  SLIDE SYSTEM
+// ══════════════════════════════════════════
+let cur=0;
+const slides=Array.from(document.querySelectorAll('.slide'));
+
+function goTo(idx){
+  const prev=slides[cur];
+  prev.classList.remove('active');
+  prev.classList.add('exit');
+  setTimeout(()=>{
+    prev.classList.remove('exit');
+    cur=idx;
+    slides[idx].classList.add('active');
+    onEnter(idx);
+  },800);
+}
+
+function onEnter(idx){
+  if(idx===2) initQ1();
+  if(idx===3) initQ2();
+  if(idx===4) initQ3();
+  if(idx===5){
+    confetti();
+    setTimeout(confetti,650);
+    setTimeout(confetti,1300);
+  }
+}
+
+async function startCard(){
+  // request iOS device orientation permission
+  if(typeof DeviceOrientationEvent!=='undefined' &&
+     typeof DeviceOrientationEvent.requestPermission==='function'){
+    try{ await DeviceOrientationEvent.requestPermission(); }catch(e){}
+  }
+  if(typeof DeviceMotionEvent!=='undefined' &&
+     typeof DeviceMotionEvent.requestPermission==='function'){
+    try{ await DeviceMotionEvent.requestPermission(); }catch(e){}
+  }
+  goTo(1);
+}
+
+// ══════════════════════════════════════════
+//  QUEST 1 — Find the special star
+// ══════════════════════════════════════════
+function initQ1(){
+  const g=document.getElementById('q1g');
+  g.innerHTML='';
+  document.getElementById('rv1').classList.remove('show');
+  document.getElementById('n1').style.display='none';
+  document.getElementById('q1h').textContent='Найди особую розовую звезду ✦';
+
+  const spcIdx=Math.floor(Math.random()*25);
+  for(let i=0;i<25;i++){
+    const d=document.createElement('div');
+    d.className='qs '+(i===spcIdx?'spc':'reg');
+    d.textContent=i===spcIdx?'✦':'✧';
+    if(i!==spcIdx){
+      d.style.setProperty('--t',(2+Math.random()*3)+'s');
+      d.style.setProperty('--d',(Math.random()*2)+'s');
+    }
+    d.addEventListener('pointerdown',ev=>{
+      ev.preventDefault();
+      if(i===spcIdx){
+        const r=d.getBoundingClientRect();
+        burst(r.left+21,r.top+21,'#FF69B4',22);
+        document.getElementById('rv1').classList.add('show');
+        document.getElementById('q1h').textContent='🌸 Нашла!';
+        setTimeout(()=>{ document.getElementById('n1').style.display='inline-block'; },900);
+      } else {
+        d.classList.add('wrong');
+        setTimeout(()=>d.classList.remove('wrong'),400);
+      }
+    });
+    g.appendChild(d);
+  }
+}
+
+// ══════════════════════════════════════════
+//  QUEST 2 — Catch the flying star
+// ══════════════════════════════════════════
+let q2Ivl=null;
+
+function initQ2(){
+  const arena=document.getElementById('q2a');
+  arena.innerHTML='';
+  document.getElementById('rv2').classList.remove('show');
+  document.getElementById('n2').style.display='none';
+  document.getElementById('q2h').textContent='Поймай падающую звезду! ⭐';
+  let caught=false;
+
+  if(q2Ivl) clearInterval(q2Ivl);
+
+  function spawn(){
+    if(caught) return;
+    const sz=arena.offsetWidth||290;
+    const mg=45;
+    const star=document.createElement('div');
+    star.className='fstar';
+    star.textContent='⭐';
+    star.style.left=(mg+Math.random()*(sz-mg*2))+'px';
+    star.style.top =(mg+Math.random()*(sz-mg*2))+'px';
+    star.style.opacity='0';
+    arena.appendChild(star);
+    setTimeout(()=>star.style.opacity='1',60);
+
+    // wander
+    const move=setInterval(()=>{
+      if(!arena.contains(star)){clearInterval(move);return;}
+      star.style.left=(mg+Math.random()*(sz-mg*2))+'px';
+      star.style.top =(mg+Math.random()*(sz-mg*2))+'px';
+    },900);
+
+    // auto-disappear after 3s
+    const rm=setTimeout(()=>{
+      star.style.opacity='0';
+      clearInterval(move);
+      setTimeout(()=>{ if(arena.contains(star)) arena.removeChild(star); },400);
+    },3200);
+
+    star.addEventListener('pointerdown',ev=>{
+      ev.preventDefault();
+      if(caught) return;
+      caught=true;
+      clearInterval(move); clearTimeout(rm); clearInterval(q2Ivl);
+      const r=star.getBoundingClientRect();
+      burst(r.left+17,r.top+17,'#FFD700',26);
+      star.style.opacity='0';
+      setTimeout(()=>{ if(arena.contains(star)) arena.removeChild(star); },300);
+      document.getElementById('q2h').textContent='🌟 Поймала!';
+      document.getElementById('rv2').classList.add('show');
+      setTimeout(()=>{ document.getElementById('n2').style.display='inline-block'; },900);
+    });
+  }
+
+  spawn();
+  q2Ivl=setInterval(spawn,1600);
+}
+
+// ══════════════════════════════════════════
+//  QUEST 3 — Light the constellation
+// ══════════════════════════════════════════
+// Points in % of 280×200
+const cPts=[
+  {x:50,y:15},   // top-center
+  {x:21,y:12},   // top-left
+  {x:79,y:12},   // top-right
+  {x:15,y:50},   // mid-left
+  {x:85,y:50},   // mid-right
+  {x:50,y:87},   // bottom
+];
+const cLines=[[1,0],[0,2],[1,3],[2,4],[3,5],[4,5]];
+
+let q3Lit=0;
+
+function initQ3(){
+  q3Lit=0;
+  const cont=document.getElementById('q3c');
+  cont.querySelectorAll('.cstar').forEach(e=>e.remove());
+
+  const svg=document.getElementById('q3svg');
+  svg.innerHTML='';
+
+  // draw dim lines
+  cLines.forEach(([a,b])=>{
+    const ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+    ln.setAttribute('x1',cPts[a].x/100*280);
+    ln.setAttribute('y1',cPts[a].y/100*200);
+    ln.setAttribute('x2',cPts[b].x/100*280);
+    ln.setAttribute('y2',cPts[b].y/100*200);
+    ln.setAttribute('stroke','rgba(255,215,0,.13)');
+    ln.setAttribute('stroke-width','1');
+    ln.setAttribute('stroke-dasharray','5 5');
+    ln.id=`cl${a}-${b}`;
+    svg.appendChild(ln);
+  });
+
+  document.getElementById('rv3').classList.remove('show');
+  document.getElementById('n3').style.display='none';
+
+  cPts.forEach((pt,i)=>{
+    const d=document.createElement('div');
+    d.className='cstar'; d.id=`cs${i}`; d.textContent='✦';
+    d.style.left=pt.x+'%'; d.style.top=pt.y+'%';
+    d.style.animationDelay=(i*.35)+'s';
+    d.addEventListener('pointerdown',ev=>{
+      ev.preventDefault();
+      if(d.classList.contains('lit')) return;
+      d.classList.add('lit');
+      const r=d.getBoundingClientRect();
+      burst(r.left+25,r.top+25,'#FFD700',16);
+      q3Lit++;
+      // light connecting lines
+      cLines.forEach(([a,b])=>{
+        const la=document.getElementById(`cs${a}`);
+        const lb=document.getElementById(`cs${b}`);
+        if(la&&la.classList.contains('lit')&&lb&&lb.classList.contains('lit')){
+          const ln=document.getElementById(`cl${a}-${b}`);
+          if(ln){
+            ln.setAttribute('stroke','rgba(255,215,0,.7)');
+            ln.setAttribute('stroke-dasharray','none');
+          }
+        }
+      });
+      if(q3Lit>=cPts.length){
+        document.getElementById('rv3').classList.add('show');
+        setTimeout(()=>{
+          document.getElementById('n3').style.display='inline-block';
+          confetti();
+        },700);
+      }
+    });
+    cont.appendChild(d);
+  });
+}
+</script>
+</body>
+</html>
