@@ -3,17 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Для Дианы 💖</title>
+  <title>Для Дианы</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     :root{
-      --gold:#FFD700;--pink:#FF69B4;--dpink:#FF1493;
-      --bg:#05000f;
+      --gold:#C9A96E;
+      --cream:#E8D5B7;
+      --violet:#8B6FBE;
+      --bg:#030008;
+      --text:rgba(255,255,255,0.85);
+      --border:rgba(201,169,110,0.2);
+      --border-hover:rgba(201,169,110,0.6);
     }
     html,body{
       width:100%;height:100%;overflow:hidden;
-      background:radial-gradient(ellipse at 30% 40%, #1e003a 0%, #05000f 70%);
-      font-family:'Georgia','Times New Roman',serif;
+      background:radial-gradient(ellipse at 35% 45%, #0d0020 0%, var(--bg) 65%);
+      font-family:'Cormorant Garamond','Georgia',serif;
       touch-action:none;
       -webkit-user-select:none;user-select:none;
       -webkit-tap-highlight-color:transparent;
@@ -23,32 +31,39 @@
     #starfield{
       position:fixed;inset:0;z-index:1;
       pointer-events:none;overflow:hidden;
-      transition:transform 0.3s ease-out;
+      transition:transform 0.5s ease-out;
     }
     .star{
       position:absolute;
       border-radius:50%;
       background:#fff;
-      animation:twinkle var(--dur,3s) ease-in-out infinite var(--dly,0s);
+      animation:twinkle var(--dur,4s) ease-in-out infinite var(--dly,0s);
+    }
+    .star.big{
+      animation:twinkleBig var(--dur,6s) ease-in-out infinite var(--dly,0s);
     }
     @keyframes twinkle{
-      0%,100%{opacity:var(--a,.5);}
-      50%{opacity:calc(var(--a,.5) * 0.15);}
+      0%,100%{opacity:var(--a,.4);}
+      50%{opacity:calc(var(--a,.4) * 0.1);}
+    }
+    @keyframes twinkleBig{
+      0%,100%{opacity:var(--a,.6);box-shadow:0 0 3px rgba(255,255,255,0.3);}
+      50%{opacity:calc(var(--a,.6)*0.25);box-shadow:none;}
     }
 
     /* ── SHOOTING STARS ── */
     .shooting-star{
       position:fixed;
-      width:120px;height:2px;
-      background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.9),rgba(255,255,255,0));
-      border-radius:2px;
+      height:1px;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,0.7),transparent);
+      border-radius:1px;
       pointer-events:none;
       z-index:2;
-      animation:shoot 1.1s ease-out forwards;
+      animation:shoot 1.4s ease-out forwards;
     }
     @keyframes shoot{
-      0%  {opacity:1; transform:translate(0,0) rotate(var(--angle,30deg));}
-      100%{opacity:0; transform:translate(220px,100px) rotate(var(--angle,30deg));}
+      0%  {opacity:.8;transform:translate(0,0) rotate(var(--angle,25deg));}
+      100%{opacity:0;transform:translate(260px,110px) rotate(var(--angle,25deg));}
     }
 
     /* ── SLIDES ── */
@@ -57,201 +72,293 @@
       position:absolute;inset:0;
       display:flex;flex-direction:column;
       align-items:center;justify-content:center;
-      padding:24px 20px;
+      padding:32px 24px;
       opacity:0;pointer-events:none;
-      transition:opacity .9s ease,transform .9s ease;
-      transform:translateY(30px);
+      transition:opacity 1.2s ease,transform 1.2s ease,filter 1.2s ease;
+      transform:translateY(24px);
+      filter:blur(4px);
     }
-    .slide.active{opacity:1;pointer-events:all;transform:translateY(0);}
-    .slide.exit{opacity:0;transform:translateY(-30px);}
+    .slide.active{opacity:1;pointer-events:all;transform:translateY(0);filter:blur(0);}
+    .slide.exit{opacity:0;transform:translateY(-24px);filter:blur(4px);}
 
-    /* ── SLIDE 0 — HEBREW ── */
-    .heb{
-      font-size:clamp(2.6rem,13vw,5.2rem);
-      color:var(--gold);direction:rtl;
-      text-shadow:0 0 20px var(--gold),0 0 60px var(--pink);
-      animation:gGlow 3s ease-in-out infinite alternate;
-      line-height:1.3;margin-bottom:12px;
-      will-change:transform,opacity;
+    /* ── DIVIDER LINE ── */
+    .gold-line{
+      width:60px;height:1px;
+      background:rgba(201,169,110,0.35);
+      margin:0 auto;
     }
-    @keyframes gGlow{
-      from{text-shadow:0 0 15px var(--gold),0 0 35px var(--pink),0 0 60px rgba(255,215,0,.3);}
-      to  {text-shadow:0 0 30px var(--gold),0 0 75px var(--pink),0 0 120px rgba(255,215,0,.5),0 0 180px rgba(255,105,180,.25);}
-    }
-    .heb-sub{color:rgba(255,255,255,.5);font-size:.95rem;letter-spacing:5px;text-transform:uppercase;margin-bottom:6px;}
-    .heb-note{color:rgba(255,255,255,.25);font-size:.78rem;letter-spacing:2px;margin-bottom:44px;}
 
     /* ── BUTTONS ── */
     .btn{
-      display:inline-block;padding:15px 38px;
-      border-radius:50px;border:none;
-      font-family:inherit;font-size:1rem;letter-spacing:2px;
-      cursor:pointer;outline:none;position:relative;
-      overflow:hidden;transition:transform .15s;
+      display:inline-block;
+      padding:14px 42px;
+      border:1px solid rgba(201,169,110,0.5);
+      background:transparent;
+      font-family:'Montserrat',sans-serif;
+      font-size:0.72rem;
+      font-weight:200;
+      letter-spacing:5px;
+      text-transform:uppercase;
+      color:var(--cream);
+      cursor:pointer;
+      outline:none;
+      position:relative;
+      overflow:hidden;
+      transition:background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
       -webkit-tap-highlight-color:transparent;
+      animation:borderPulse 4s ease-in-out infinite;
     }
-    .btn:active{transform:scale(.93);}
-    .btn-glow{
-      background:linear-gradient(135deg,#FF1493,#FF69B4,#FFD700);
-      color:#fff;
-      animation:bGlow 2.2s ease-in-out infinite;
-      will-change:transform,opacity;
+    @keyframes borderPulse{
+      0%,100%{border-color:rgba(201,169,110,0.4);}
+      50%{border-color:rgba(201,169,110,0.7);}
     }
-    @keyframes bGlow{
-      0%,100%{box-shadow:0 0 14px rgba(255,20,147,.65),0 0 30px rgba(255,20,147,.35);}
-      50%    {box-shadow:0 0 28px rgba(255,20,147,1),0 0 60px rgba(255,20,147,.65),0 0 100px rgba(255,215,0,.35);}
+    .btn:active{
+      background:rgba(201,169,110,0.12);
+      border-color:rgba(201,169,110,0.85);
     }
-    .btn-glow::after{
-      content:'';position:absolute;
-      top:-50%;left:-75%;width:50%;height:200%;
-      background:rgba(255,255,255,.22);transform:skewX(-20deg);
-      animation:bShine 3.2s ease-in-out infinite;
+
+    /* ── SLIDE 0 — HEBREW ── */
+    .heb{
+      font-family:'Cormorant Garamond',serif;
+      font-style:italic;
+      font-weight:300;
+      font-size:clamp(3rem,14vw,6rem);
+      color:var(--gold);
+      direction:rtl;
+      line-height:1.2;
+      margin-bottom:20px;
+      letter-spacing:0.02em;
     }
-    @keyframes bShine{0%{left:-75%;}60%,100%{left:155%;}}
+    .heb-sub{
+      font-family:'Montserrat',sans-serif;
+      font-weight:200;
+      font-size:0.72rem;
+      letter-spacing:6px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,0.45);
+      margin-bottom:10px;
+    }
+    .heb-note{
+      font-family:'Montserrat',sans-serif;
+      font-weight:200;
+      font-size:0.65rem;
+      letter-spacing:3px;
+      color:rgba(255,255,255,0.2);
+      margin-bottom:48px;
+    }
 
     /* ── SLIDE COMMON ── */
     .sname{
-      font-size:clamp(2.4rem,10vw,4rem);
-      background:linear-gradient(135deg,var(--gold),var(--pink),var(--dpink));
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-      background-clip:text;text-align:center;font-weight:bold;
-      margin-bottom:14px;
+      font-family:'Cormorant Garamond',serif;
+      font-style:italic;
+      font-weight:300;
+      font-size:clamp(2.8rem,12vw,5rem);
+      color:var(--gold);
+      text-align:center;
+      margin-bottom:16px;
+      letter-spacing:0.04em;
     }
     .ssub{
-      color:rgba(255,255,255,.75);text-align:center;
-      font-size:1.05rem;line-height:2;margin-bottom:22px;
+      font-family:'Cormorant Garamond',serif;
+      font-style:italic;
+      font-weight:300;
+      color:rgba(255,255,255,0.6);
+      text-align:center;
+      font-size:1.15rem;
+      line-height:1.9;
+      margin-bottom:24px;
+    }
+    .sep{
+      font-family:'Montserrat',sans-serif;
+      font-weight:200;
+      color:rgba(201,169,110,0.45);
+      font-size:0.85rem;
+      letter-spacing:12px;
+      margin-bottom:24px;
+    }
+    .slide-hint{
+      font-family:'Montserrat',sans-serif;
+      font-weight:200;
+      font-size:0.65rem;
+      letter-spacing:3px;
+      color:rgba(255,255,255,0.25);
+      margin-bottom:22px;
+      text-transform:uppercase;
     }
 
     /* ── PROGRESS ── */
-    .prog-wrap{width:min(85%,320px);margin-bottom:18px;}
-    .prog-lbl{color:rgba(255,255,255,.38);font-size:.72rem;letter-spacing:2.5px;text-align:center;margin-bottom:7px;}
-    .prog-bar{height:3px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;}
+    .prog-wrap{width:min(85%,300px);margin-bottom:24px;}
+    .prog-lbl{
+      font-family:'Montserrat',sans-serif;
+      font-weight:200;
+      color:rgba(255,255,255,0.28);
+      font-size:0.6rem;
+      letter-spacing:4px;
+      text-transform:uppercase;
+      text-align:center;
+      margin-bottom:8px;
+    }
+    .prog-bar{
+      height:2px;
+      background:rgba(255,255,255,0.06);
+      border-radius:99px;
+      overflow:hidden;
+    }
     .prog-fill{
       height:100%;
-      background:linear-gradient(90deg,var(--dpink),var(--gold));
-      border-radius:99px;box-shadow:0 0 8px var(--dpink);
-      transition:width .8s ease;
+      background:var(--gold);
+      border-radius:99px;
+      transition:width 1s ease;
     }
 
     /* ── QUEST COMMON ── */
     .qhint{
-      color:rgba(255,255,255,.42);font-size:.83rem;
-      letter-spacing:1px;margin-bottom:18px;
-      animation:hp 2s ease-in-out infinite;
+      font-family:'Montserrat',sans-serif;
+      font-weight:200;
+      color:rgba(255,255,255,0.38);
+      font-size:0.72rem;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      margin-bottom:24px;
+      animation:hintPulse 3s ease-in-out infinite;
     }
-    @keyframes hp{0%,100%{opacity:.42;}50%{opacity:.9;}}
+    @keyframes hintPulse{0%,100%{opacity:.38;}50%{opacity:.8;}}
     .rv{
-      font-size:clamp(1.2rem,5.5vw,1.9rem);
-      color:var(--gold);text-align:center;
-      text-shadow:0 0 18px var(--gold),0 0 40px var(--pink);
-      opacity:0;transform:scale(.65);
-      transition:opacity .7s ease,transform .7s cubic-bezier(.34,1.56,.64,1);
-      margin:14px 0;
+      font-family:'Cormorant Garamond',serif;
+      font-style:italic;
+      font-weight:300;
+      font-size:clamp(1.3rem,5.5vw,2rem);
+      color:var(--gold);
+      text-align:center;
+      opacity:0;transform:scale(.75) translateY(10px);
+      transition:opacity .9s ease,transform .9s cubic-bezier(.34,1.4,.64,1);
+      margin:16px 0;
+      letter-spacing:0.02em;
     }
-    .rv.show{opacity:1;transform:scale(1);}
+    .rv.show{opacity:1;transform:scale(1) translateY(0);}
 
     /* ── QUEST 1 — grid ── */
     #q1g{
       display:grid;grid-template-columns:repeat(5,1fr);
-      gap:8px;width:min(270px,82vw);margin:0 auto 18px;
+      gap:10px;width:min(280px,84vw);margin:0 auto 20px;
     }
     .qs{
-      width:42px;height:42px;
+      width:44px;height:44px;
       display:flex;align-items:center;justify-content:center;
-      font-size:1.45rem;border-radius:50%;
-      cursor:pointer;transition:transform .15s;
+      font-size:1.1rem;
+      cursor:pointer;
+      transition:transform .15s;
+      color:rgba(255,255,255,0.22);
+      animation:qsSt var(--t,3.5s) ease-in-out infinite var(--d,0s);
     }
-    .qs.reg{
-      color:rgba(255,255,255,.45);
-      animation:st var(--t,3s) ease-in-out infinite var(--d,0s);
-    }
-    @keyframes st{0%,100%{opacity:.45;}50%{opacity:.95;}}
+    @keyframes qsSt{0%,100%{opacity:.22;}50%{opacity:.55;}}
     .qs.spc{
-      color:var(--pink);font-size:1.75rem;
-      animation:sp 1.5s ease-in-out infinite;
-      filter:drop-shadow(0 0 8px var(--pink));
-      will-change:transform,opacity;
+      color:var(--gold);
+      font-size:1.45rem;
+      animation:qsGold 2.5s ease-in-out infinite;
     }
-    @keyframes sp{
-      0%,100%{transform:scale(1);filter:drop-shadow(0 0 8px var(--pink));}
-      50%{transform:scale(1.28);filter:drop-shadow(0 0 20px var(--pink)) drop-shadow(0 0 10px var(--gold));}
+    @keyframes qsGold{
+      0%,100%{opacity:.75;transform:scale(1);}
+      50%{opacity:1;transform:scale(1.2);}
     }
-    .qs.wrong{animation:wt .4s ease;}
-    @keyframes wt{0%,100%{transform:scale(1);}30%{transform:scale(1.2) rotate(12deg);}70%{transform:scale(.8) rotate(-12deg);}}
+    .qs.wrong{animation:qsWrong .35s ease;}
+    @keyframes qsWrong{0%,100%{transform:scale(1);}30%{transform:scale(1.15) rotate(10deg);}70%{transform:scale(.88) rotate(-10deg);}}
 
     /* ── QUEST 2 — arena ── */
     #q2a{
       position:relative;
       width:min(290px,88vw);height:min(290px,88vw);
-      margin:0 auto 18px;border-radius:50%;
-      background:radial-gradient(circle,rgba(255,255,255,.025) 0%,transparent 70%);
-      border:1px solid rgba(255,255,255,.07);overflow:hidden;
+      margin:0 auto 20px;
+      overflow:hidden;
     }
     .fstar{
-      position:absolute;font-size:2.1rem;cursor:pointer;
-      filter:drop-shadow(0 0 12px var(--gold));
-      transition:left .8s cubic-bezier(.25,.8,.25,1),top .8s cubic-bezier(.25,.8,.25,1),opacity .35s;
+      position:absolute;
+      font-size:1.5rem;
+      cursor:pointer;
+      color:var(--gold);
+      transition:left .9s cubic-bezier(.25,.8,.25,1),top .9s cubic-bezier(.25,.8,.25,1),opacity .4s;
+      line-height:1;
     }
 
     /* ── QUEST 3 — constellation ── */
     #q3c{
       position:relative;
       width:min(280px,88vw);height:200px;
-      margin:0 auto 18px;
+      margin:0 auto 20px;
     }
     #q3svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
     .cstar{
       position:absolute;
-      width:50px;height:50px;border-radius:50%;
-      border:2px solid rgba(255,215,0,.4);
+      width:46px;height:46px;border-radius:50%;
+      border:1px solid rgba(201,169,110,0.3);
       display:flex;align-items:center;justify-content:center;
-      font-size:1.25rem;cursor:pointer;
-      transition:all .35s;
-      animation:ci 2.6s ease-in-out infinite;
+      font-size:0.9rem;
+      color:rgba(201,169,110,0.35);
+      cursor:pointer;
+      transition:all .45s ease;
+      animation:cPulse 3s ease-in-out infinite;
       transform:translate(-50%,-50%);
-      will-change:transform,opacity;
     }
-    @keyframes ci{0%,100%{border-color:rgba(255,215,0,.4);}50%{border-color:rgba(255,215,0,.9);box-shadow:0 0 12px rgba(255,215,0,.35);}}
+    @keyframes cPulse{0%,100%{border-color:rgba(201,169,110,.25);}50%{border-color:rgba(201,169,110,.55);}}
     .cstar.lit{
-      background:rgba(255,215,0,.2);
+      background:rgba(201,169,110,0.12);
       border-color:var(--gold);
-      animation:cl 1s ease-in-out infinite alternate;
+      color:var(--gold);
+      animation:cLit 1.8s ease-in-out infinite alternate;
     }
-    @keyframes cl{
-      from{box-shadow:0 0 14px var(--gold),0 0 28px rgba(255,215,0,.3);}
-      to  {box-shadow:0 0 28px var(--gold),0 0 55px rgba(255,215,0,.5),0 0 6px var(--pink);}
+    @keyframes cLit{
+      from{box-shadow:0 0 8px rgba(201,169,110,0.25);}
+      to  {box-shadow:0 0 18px rgba(201,169,110,0.45),0 0 6px rgba(201,169,110,0.2) inset;}
     }
 
     /* ── FINAL SLIDE ── */
     .fcard{
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,215,0,.22);
-      border-radius:26px;padding:28px 22px;
-      width:min(340px,91vw);text-align:center;
-      backdrop-filter:blur(12px);
-      box-shadow:0 0 50px rgba(255,20,147,.12),inset 0 0 40px rgba(255,215,0,.04);
+      background:rgba(255,255,255,0.025);
+      border:1px solid rgba(201,169,110,0.2);
+      padding:32px 28px;
+      width:min(340px,91vw);
+      text-align:center;
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
     }
-    .fline{color:rgba(255,255,255,.88);font-size:1.08rem;line-height:2.1;}
-    .hl-g{color:var(--gold);text-shadow:0 0 10px var(--gold);}
-    .hl-p{color:var(--pink);text-shadow:0 0 10px var(--pink);}
-    .hrow{display:flex;justify-content:center;gap:12px;margin:14px 0;}
-    .hf{font-size:1.8rem;animation:hfl 2.5s ease-in-out infinite;}
-    .hf:nth-child(2){animation-delay:.4s;}
-    .hf:nth-child(3){animation-delay:.8s;}
-    @keyframes hfl{0%,100%{transform:translateY(0);}50%{transform:translateY(-13px);}}
+    .fline{
+      font-family:'Cormorant Garamond',serif;
+      font-style:italic;
+      font-weight:300;
+      color:rgba(255,255,255,0.8);
+      font-size:1.2rem;
+      line-height:2.1;
+    }
+    .hl-g{
+      color:var(--gold);
+      font-style:normal;
+      font-weight:400;
+    }
+    .hl-v{
+      color:#b8a3d8;
+      font-style:normal;
+      font-weight:400;
+    }
+    .final-sub{
+      font-family:'Montserrat',sans-serif;
+      font-weight:200;
+      font-size:0.65rem;
+      letter-spacing:3px;
+      color:rgba(255,255,255,0.28);
+      margin-top:8px;
+      text-transform:uppercase;
+    }
 
     /* ── SHAKE RING ── */
     .shake-ring{
       position:fixed;inset:0;z-index:45;pointer-events:none;
-      border:3px solid rgba(255,105,180,0);
-      border-radius:0;
-      animation:none;
+      border:1px solid rgba(201,169,110,0);
     }
-    .shake-ring.pop{animation:srPop .5s ease forwards;}
+    .shake-ring.pop{animation:srPop .7s ease forwards;}
     @keyframes srPop{
-      0%{border-color:rgba(255,105,180,0);border-radius:0;}
-      40%{border-color:rgba(255,105,180,.8);border-radius:30px;}
-      100%{border-color:rgba(255,105,180,0);border-radius:60px;}
+      0%{border-color:rgba(201,169,110,0);}
+      40%{border-color:rgba(201,169,110,0.5);}
+      100%{border-color:rgba(201,169,110,0);}
     }
   </style>
 </head>
@@ -266,106 +373,116 @@
   <div class="slide active" id="s0">
     <div style="text-align:center;">
       <div class="heb">אֲנִי אוֹהֵב אוֹתָךְ</div>
+      <div class="gold-line" style="margin-bottom:20px;"></div>
       <div class="heb-sub">Я люблю тебя</div>
       <div class="heb-note">— для самой особенной —</div>
-      <button class="btn btn-glow" id="openBtn" onclick="startCard()">
-        ✨&nbsp;&nbsp;Открыть послание&nbsp;&nbsp;✨
-      </button>
+      <button class="btn" id="openBtn" onclick="startCard()">Открыть послание</button>
     </div>
   </div>
 
   <!-- ══ SLIDE 1 — INTRO ══ -->
   <div class="slide" id="s1">
     <div class="sname">Диана</div>
-    <div class="ssub">У меня есть для тебя<br>три особых секрета…</div>
-    <div style="color:rgba(255,215,0,.6);font-size:1.5rem;margin-bottom:28px;letter-spacing:10px;">★ ★ ★</div>
-    <div style="color:rgba(255,255,255,.38);font-size:.82rem;margin-bottom:22px;letter-spacing:1px;">Готова начать квест?</div>
-    <button class="btn btn-glow" onclick="goTo(2)">💫&nbsp;&nbsp;Начать квест</button>
+    <div class="ssub">У меня есть для тебя<br>три особых секрета</div>
+    <div class="sep">✦ · ✦ · ✦</div>
+    <div class="slide-hint">Готова начать квест?</div>
+    <button class="btn" onclick="goTo(2)">Начать</button>
   </div>
 
   <!-- ══ SLIDE 2 — QUEST 1 ══ -->
   <div class="slide" id="s2">
     <div class="prog-wrap">
-      <div class="prog-lbl">СЕКРЕТ 1 ИЗ 3</div>
+      <div class="prog-lbl">Секрет I из III</div>
       <div class="prog-bar"><div class="prog-fill" style="width:33%"></div></div>
     </div>
-    <div class="qhint" id="q1h">Найди особую розовую звезду ✦</div>
+    <div class="qhint" id="q1h">Найди особую золотую звезду</div>
     <div id="q1g"></div>
-    <div class="rv" id="rv1">✨ Ты самая ответственная ✨</div>
-    <button class="btn btn-glow" id="n1" style="display:none;margin-top:14px" onclick="goTo(3)">Дальше →</button>
+    <div class="rv" id="rv1">Ты самая ответственная</div>
+    <button class="btn" id="n1" style="display:none;margin-top:16px" onclick="goTo(3)">Далее</button>
   </div>
 
   <!-- ══ SLIDE 3 — QUEST 2 ══ -->
   <div class="slide" id="s3">
     <div class="prog-wrap">
-      <div class="prog-lbl">СЕКРЕТ 2 ИЗ 3</div>
+      <div class="prog-lbl">Секрет II из III</div>
       <div class="prog-bar"><div class="prog-fill" style="width:66%"></div></div>
     </div>
-    <div class="qhint" id="q2h">Поймай падающую звезду! ⭐</div>
+    <div class="qhint" id="q2h">Поймай падающую звезду</div>
     <div id="q2a"></div>
-    <div class="rv" id="rv2">💪 Ты самая сильная 💪</div>
-    <button class="btn btn-glow" id="n2" style="display:none;margin-top:14px" onclick="goTo(4)">Дальше →</button>
+    <div class="rv" id="rv2">Ты самая сильная</div>
+    <button class="btn" id="n2" style="display:none;margin-top:16px" onclick="goTo(4)">Далее</button>
   </div>
 
   <!-- ══ SLIDE 4 — QUEST 3 ══ -->
   <div class="slide" id="s4">
     <div class="prog-wrap">
-      <div class="prog-lbl">СЕКРЕТ 3 ИЗ 3</div>
+      <div class="prog-lbl">Секрет III из III</div>
       <div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div>
     </div>
-    <div class="qhint">Зажги все звёзды созвездия 🌟</div>
+    <div class="qhint">Зажги все звёзды созвездия</div>
     <div id="q3c">
       <svg id="q3svg" viewBox="0 0 280 200" preserveAspectRatio="xMidYMid meet"></svg>
     </div>
-    <div class="rv" id="rv3">👑 Ты самая красивая 👑</div>
-    <button class="btn btn-glow" id="n3" style="display:none;margin-top:14px" onclick="goTo(5)">Финал ✨</button>
+    <div class="rv" id="rv3">Ты самая красивая</div>
+    <button class="btn" id="n3" style="display:none;margin-top:16px" onclick="goTo(5)">Финал</button>
   </div>
 
   <!-- ══ SLIDE 5 — FINAL ══ -->
   <div class="slide" id="s5">
-    <div class="hrow">
-      <span class="hf">💖</span><span class="hf">💗</span><span class="hf">💖</span>
-    </div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:rgba(201,169,110,0.4);letter-spacing:16px;margin-bottom:28px;">✦ · ✦</div>
     <div class="fcard">
-      <div class="sname" style="margin-bottom:18px;">Диана</div>
+      <div class="sname" style="margin-bottom:20px;font-size:clamp(2.2rem,10vw,3.8rem);">Диана</div>
+      <div class="gold-line" style="margin-bottom:20px;"></div>
       <div class="fline">
         Ты самая <span class="hl-g">ответственная</span>,<br>
-        самая <span class="hl-p">сильная</span><br>
-        и самая <span class="hl-g">красивая</span>!
+        самая <span class="hl-v">сильная</span><br>
+        и самая <span class="hl-g">красивая</span>
       </div>
-      <div style="margin:18px 0;color:rgba(255,255,255,.3);font-size:1.3rem;letter-spacing:7px;">· · ·</div>
-      <div style="color:rgba(255,255,255,.62);font-size:.93rem;line-height:2;">
-        Ты — моя вселенная,<br>мой самый яркий свет ✨
+      <div style="margin:20px 0;color:rgba(201,169,110,0.3);font-size:1rem;letter-spacing:10px;">· · ·</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;color:rgba(255,255,255,0.4);font-size:1rem;line-height:2;">
+        Ты — моя вселенная,<br>мой самый яркий свет
       </div>
+      <div class="final-sub" style="margin-top:20px;">∞</div>
     </div>
-    <div class="hrow" style="margin-top:18px;">
-      <span class="hf" style="font-size:2.6rem;animation-delay:.2s;">❤️</span>
-    </div>
+    <div style="margin-top:24px;font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:rgba(201,169,110,0.3);letter-spacing:14px;">✦ · ✦</div>
   </div>
 
 </div>
 
 <script>
 // ══════════════════════════════════════════
-//  CSS-BASED STARFIELD
+//  STARFIELD
 // ══════════════════════════════════════════
 const starfield = document.getElementById('starfield');
 
 (function createStars(){
-  for(let i=0;i<80;i++){
+  for(let i=0;i<60;i++){
     const el=document.createElement('div');
     el.className='star';
-    const size=(Math.random()*2.2+0.4).toFixed(1);
-    const opacity=(Math.random()*.6+.25).toFixed(2);
-    const dur=(2+Math.random()*3).toFixed(1);
-    const dly=(Math.random()*4).toFixed(1);
+    const size=(Math.random()*1.4+0.4).toFixed(1);
+    const opacity=(Math.random()*.45+.18).toFixed(2);
+    const dur=(3+Math.random()*4).toFixed(1);
+    const dly=(Math.random()*6).toFixed(1);
     el.style.cssText=`
       width:${size}px;height:${size}px;
       left:${(Math.random()*100).toFixed(2)}%;
       top:${(Math.random()*100).toFixed(2)}%;
-      --a:${opacity};
-      --dur:${dur}s;
-      --dly:${dly}s;
+      --a:${opacity};--dur:${dur}s;--dly:${dly}s;
+    `;
+    starfield.appendChild(el);
+  }
+  for(let i=0;i<7;i++){
+    const el=document.createElement('div');
+    el.className='star big';
+    const size=(Math.random()*1.5+2.5).toFixed(1);
+    const opacity=(Math.random()*.3+.4).toFixed(2);
+    const dur=(5+Math.random()*5).toFixed(1);
+    const dly=(Math.random()*6).toFixed(1);
+    el.style.cssText=`
+      width:${size}px;height:${size}px;
+      left:${(Math.random()*100).toFixed(2)}%;
+      top:${(Math.random()*100).toFixed(2)}%;
+      --a:${opacity};--dur:${dur}s;--dly:${dly}s;
     `;
     starfield.appendChild(el);
   }
@@ -375,24 +492,27 @@ const starfield = document.getElementById('starfield');
 function spawnShootingStar(){
   const el=document.createElement('div');
   el.className='shooting-star';
-  const angle=(Math.random()*30+20);
+  const angle=(Math.random()*25+18);
+  const w=(80+Math.random()*80).toFixed(0);
   el.style.cssText=`
+    width:${w}px;
     left:${(Math.random()*70).toFixed(1)}%;
-    top:${(Math.random()*50).toFixed(1)}%;
+    top:${(Math.random()*45).toFixed(1)}%;
     --angle:${angle}deg;
   `;
   document.body.appendChild(el);
   el.addEventListener('animationend',()=>el.remove(),{once:true});
 }
-setInterval(spawnShootingStar,4000);
+setInterval(spawnShootingStar,5500);
+setTimeout(spawnShootingStar,1200);
 
 // ── Parallax on tilt ──
 let sfX=0,sfY=0;
 window.addEventListener('deviceorientation',e=>{
   if(e.gamma==null) return;
-  const tx=Math.max(-20,Math.min(20,e.gamma/30*20));
-  const ty=Math.max(-20,Math.min(20,((e.beta||0)-45)/30*20));
-  sfX+=(tx-sfX)*.08; sfY+=(ty-sfY)*.08;
+  const tx=Math.max(-18,Math.min(18,e.gamma/30*18));
+  const ty=Math.max(-18,Math.min(18,((e.beta||0)-45)/30*18));
+  sfX+=(tx-sfX)*.06; sfY+=(ty-sfY)*.06;
   starfield.style.transform=`translate(${sfX.toFixed(1)}px,${sfY.toFixed(1)}px)`;
 },{passive:true});
 
@@ -417,76 +537,63 @@ function onShake(){
   void ring.offsetWidth;
   ring.classList.add('pop');
   const W=window.innerWidth, H=window.innerHeight;
-  for(let i=0;i<6;i++){
+  for(let i=0;i<5;i++){
     setTimeout(()=>{
-      burst(Math.random()*W,Math.random()*H,'#FF69B4',12);
-    },i*80);
+      burst(Math.random()*W,Math.random()*H,'#C9A96E',10);
+    },i*90);
   }
 }
 
 // ══════════════════════════════════════════
-//  FX PARTICLES (Web Animation API)
+//  FX PARTICLES
 // ══════════════════════════════════════════
-function burst(x,y,col='#FFD700',n=12){
+function burst(x,y,col='#C9A96E',n=10){
   for(let i=0;i<n;i++){
     const ang=(Math.PI*2/n)*i+(Math.random()-.5);
-    const spd=Math.random()*5+2;
+    const spd=Math.random()*4+1.5;
     const vx=Math.cos(ang)*spd;
     const vy=Math.sin(ang)*spd;
-    const r=Math.random()*4+2;
-    const isRect=Math.random()>.5;
-
+    const r=Math.random()*2.5+1;
     const el=document.createElement('div');
     el.style.cssText=`
-      position:fixed;
-      left:${x}px;top:${y}px;
-      width:${isRect?r*2:r*2}px;
-      height:${isRect?r:r*2}px;
+      position:fixed;left:${x}px;top:${y}px;
+      width:${r*2}px;height:${r*2}px;
       background:${col};
-      border-radius:${isRect?'2px':'50%'};
-      pointer-events:none;
-      z-index:50;
-      transform-origin:center center;
+      border-radius:50%;
+      pointer-events:none;z-index:50;
     `;
     document.body.appendChild(el);
-
-    const frames=[
-      {transform:`translate(0,0) rotate(0deg)`,opacity:1},
-      {transform:`translate(${vx*40}px,${vy*40+20}px) rotate(${Math.random()*360}deg)`,opacity:0}
-    ];
-    el.animate(frames,{duration:600,easing:'ease-out'})
+    el.animate([
+      {transform:`translate(0,0)`,opacity:.9},
+      {transform:`translate(${vx*38}px,${vy*38+14}px)`,opacity:0}
+    ],{duration:700,easing:'ease-out'})
       .addEventListener('finish',()=>el.remove(),{once:true});
   }
 }
 
 function confetti(){
-  const cols=['#FFD700','#FF69B4','#FF1493','#BF5FFF','#00CED1','#FF4500','#fff'];
+  const cols=['#C9A96E','#E8D5B7','#8B6FBE','rgba(255,255,255,0.6)'];
   const W=window.innerWidth, H=window.innerHeight;
-  for(let i=0;i<40;i++){
+  for(let i=0;i<30;i++){
     const col=cols[Math.floor(Math.random()*cols.length)];
-    const r=Math.random()*5+3;
-    const isRect=Math.random()>.4;
+    const r=Math.random()*3+1.5;
     const startX=Math.random()*W;
-    const driftX=(Math.random()-.5)*120;
-
+    const driftX=(Math.random()-.5)*100;
     const el=document.createElement('div');
     el.style.cssText=`
-      position:fixed;
-      left:${startX}px;top:-14px;
-      width:${isRect?r*2:r*2}px;
-      height:${isRect?r:r*2}px;
+      position:fixed;left:${startX}px;top:-10px;
+      width:${r*2}px;height:${r*2}px;
       background:${col};
-      border-radius:${isRect?'2px':'50%'};
-      pointer-events:none;
-      z-index:50;
+      border-radius:50%;
+      pointer-events:none;z-index:50;
+      opacity:0.7;
     `;
     document.body.appendChild(el);
-
-    const delay=Math.random()*800;
-    const dur=1400+Math.random()*800;
+    const delay=Math.random()*700;
+    const dur=1600+Math.random()*700;
     el.animate([
-      {transform:`translate(0,0) rotate(0deg)`,opacity:1},
-      {transform:`translate(${driftX}px,${H+30}px) rotate(${Math.random()*720}deg)`,opacity:.2}
+      {transform:`translate(0,0) rotate(0deg)`,opacity:.7},
+      {transform:`translate(${driftX}px,${H+20}px) rotate(${Math.random()*540}deg)`,opacity:0}
     ],{duration:dur,delay,easing:'ease-in'})
       .addEventListener('finish',()=>el.remove(),{once:true});
   }
@@ -507,7 +614,7 @@ function goTo(idx){
     cur=idx;
     slides[idx].classList.add('active');
     onEnter(idx);
-  },800);
+  },900);
 }
 
 function onEnter(idx){
@@ -516,8 +623,8 @@ function onEnter(idx){
   if(idx===4) initQ3();
   if(idx===5){
     confetti();
-    setTimeout(confetti,650);
-    setTimeout(confetti,1300);
+    setTimeout(confetti,700);
+    setTimeout(confetti,1400);
   }
 }
 
@@ -541,28 +648,28 @@ function initQ1(){
   g.innerHTML='';
   document.getElementById('rv1').classList.remove('show');
   document.getElementById('n1').style.display='none';
-  document.getElementById('q1h').textContent='Найди особую розовую звезду ✦';
+  document.getElementById('q1h').textContent='Найди особую золотую звезду';
 
   const spcIdx=Math.floor(Math.random()*25);
   for(let i=0;i<25;i++){
     const d=document.createElement('div');
     d.className='qs '+(i===spcIdx?'spc':'reg');
-    d.textContent=i===spcIdx?'✦':'✧';
+    d.textContent=i===spcIdx?'✦':'◇';
     if(i!==spcIdx){
-      d.style.setProperty('--t',(2+Math.random()*3)+'s');
-      d.style.setProperty('--d',(Math.random()*2)+'s');
+      d.style.setProperty('--t',(2.5+Math.random()*3.5)+'s');
+      d.style.setProperty('--d',(Math.random()*2.5)+'s');
     }
     d.addEventListener('pointerdown',ev=>{
       ev.preventDefault();
       if(i===spcIdx){
         const r=d.getBoundingClientRect();
-        burst(r.left+21,r.top+21,'#FF69B4',22);
+        burst(r.left+22,r.top+22,'#C9A96E',18);
         document.getElementById('rv1').classList.add('show');
-        document.getElementById('q1h').textContent='🌸 Нашла!';
-        setTimeout(()=>{ document.getElementById('n1').style.display='inline-block'; },900);
+        document.getElementById('q1h').textContent='Нашла';
+        setTimeout(()=>{ document.getElementById('n1').style.display='inline-block'; },1000);
       } else {
         d.classList.add('wrong');
-        setTimeout(()=>d.classList.remove('wrong'),400);
+        setTimeout(()=>d.classList.remove('wrong'),350);
       }
     });
     g.appendChild(d);
@@ -579,7 +686,7 @@ function initQ2(){
   arena.innerHTML='';
   document.getElementById('rv2').classList.remove('show');
   document.getElementById('n2').style.display='none';
-  document.getElementById('q2h').textContent='Поймай падающую звезду! ⭐';
+  document.getElementById('q2h').textContent='Поймай падающую звезду';
   let caught=false;
 
   if(q2Ivl) clearInterval(q2Ivl);
@@ -587,10 +694,10 @@ function initQ2(){
   function spawn(){
     if(caught) return;
     const sz=arena.offsetWidth||290;
-    const mg=45;
+    const mg=40;
     const star=document.createElement('div');
     star.className='fstar';
-    star.textContent='⭐';
+    star.textContent='✦';
     star.style.left=(mg+Math.random()*(sz-mg*2))+'px';
     star.style.top =(mg+Math.random()*(sz-mg*2))+'px';
     star.style.opacity='0';
@@ -601,13 +708,13 @@ function initQ2(){
       if(!arena.contains(star)){clearInterval(move);return;}
       star.style.left=(mg+Math.random()*(sz-mg*2))+'px';
       star.style.top =(mg+Math.random()*(sz-mg*2))+'px';
-    },900);
+    },950);
 
     const rm=setTimeout(()=>{
       star.style.opacity='0';
       clearInterval(move);
       setTimeout(()=>{ if(arena.contains(star)) arena.removeChild(star); },400);
-    },3200);
+    },3400);
 
     star.addEventListener('pointerdown',ev=>{
       ev.preventDefault();
@@ -615,17 +722,17 @@ function initQ2(){
       caught=true;
       clearInterval(move); clearTimeout(rm); clearInterval(q2Ivl);
       const r=star.getBoundingClientRect();
-      burst(r.left+17,r.top+17,'#FFD700',26);
+      burst(r.left+12,r.top+12,'#C9A96E',22);
       star.style.opacity='0';
       setTimeout(()=>{ if(arena.contains(star)) arena.removeChild(star); },300);
-      document.getElementById('q2h').textContent='🌟 Поймала!';
+      document.getElementById('q2h').textContent='Поймала';
       document.getElementById('rv2').classList.add('show');
-      setTimeout(()=>{ document.getElementById('n2').style.display='inline-block'; },900);
+      setTimeout(()=>{ document.getElementById('n2').style.display='inline-block'; },1000);
     });
   }
 
   spawn();
-  q2Ivl=setInterval(spawn,1600);
+  q2Ivl=setInterval(spawn,1700);
 }
 
 // ══════════════════════════════════════════
@@ -657,9 +764,9 @@ function initQ3(){
     ln.setAttribute('y1',cPts[a].y/100*200);
     ln.setAttribute('x2',cPts[b].x/100*280);
     ln.setAttribute('y2',cPts[b].y/100*200);
-    ln.setAttribute('stroke','rgba(255,215,0,.13)');
+    ln.setAttribute('stroke','rgba(201,169,110,0.1)');
     ln.setAttribute('stroke-width','1');
-    ln.setAttribute('stroke-dasharray','5 5');
+    ln.setAttribute('stroke-dasharray','4 6');
     ln.id=`cl${a}-${b}`;
     svg.appendChild(ln);
   });
@@ -669,15 +776,17 @@ function initQ3(){
 
   cPts.forEach((pt,i)=>{
     const d=document.createElement('div');
-    d.className='cstar'; d.id=`cs${i}`; d.textContent='✦';
+    d.className='cstar'; d.id=`cs${i}`;
+    d.textContent='◇';
     d.style.left=pt.x+'%'; d.style.top=pt.y+'%';
-    d.style.animationDelay=(i*.35)+'s';
+    d.style.animationDelay=(i*.4)+'s';
     d.addEventListener('pointerdown',ev=>{
       ev.preventDefault();
       if(d.classList.contains('lit')) return;
       d.classList.add('lit');
+      d.textContent='✦';
       const r=d.getBoundingClientRect();
-      burst(r.left+25,r.top+25,'#FFD700',16);
+      burst(r.left+23,r.top+23,'#C9A96E',14);
       q3Lit++;
       cLines.forEach(([a,b])=>{
         const la=document.getElementById(`cs${a}`);
@@ -685,7 +794,7 @@ function initQ3(){
         if(la&&la.classList.contains('lit')&&lb&&lb.classList.contains('lit')){
           const ln=document.getElementById(`cl${a}-${b}`);
           if(ln){
-            ln.setAttribute('stroke','rgba(255,215,0,.7)');
+            ln.setAttribute('stroke','rgba(201,169,110,0.55)');
             ln.setAttribute('stroke-dasharray','none');
           }
         }
@@ -695,7 +804,7 @@ function initQ3(){
         setTimeout(()=>{
           document.getElementById('n3').style.display='inline-block';
           confetti();
-        },700);
+        },800);
       }
     });
     cont.appendChild(d);
